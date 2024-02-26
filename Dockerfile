@@ -6,5 +6,5 @@ RUN cargo build --release
 
 FROM rust:latest
 WORKDIR /app
-COPY --from=builder /app/target/release/k8s-autodeploy /app/bin
+COPY --from=builder /app/target/release/email-relay-api /app/bin
 CMD ["./bin"]
