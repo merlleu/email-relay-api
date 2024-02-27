@@ -2,10 +2,13 @@ use std::collections::BTreeMap;
 
 use actix_web::{
     post,
-    web::{Data, JsonBody, Json},
+    web::{Data, Json, JsonBody},
     HttpRequest, HttpResponse,
 };
-use lettre::{message::{MultiPart, SinglePart}, Address, AsyncSmtpTransport, AsyncTransport};
+use lettre::{
+    message::{MultiPart, SinglePart},
+    Address, AsyncSmtpTransport, AsyncTransport,
+};
 use serde::{Deserialize, Serialize};
 
 use crate::Context;
@@ -27,12 +30,19 @@ pub async fn post_email(
 
     let body = body.into_inner();
 
-    let futs = body.into_iter().map(|email| send_email(email, &ctx)).collect::<Vec<_>>();
+    let futs = body
+        .into_iter()
+        .map(|email| send_email(email, &ctx))
+        .collect::<Vec<_>>();
 
-    let results = futures::future::join_all(futs).await.into_iter().map(|r| match r {
-        Ok(_) => Ok(()),
-        Err(e) => Err(e.to_string()),
-    }).collect::<Vec<_>>();
+    let results = futures::future::join_all(futs)
+        .await
+        .into_iter()
+        .map(|r| match r {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        })
+        .collect::<Vec<_>>();
 
     HttpResponse::Ok().json(results)
 }
@@ -68,7 +78,6 @@ pub struct Email {
     pub html_body: Option<String>,
 }
 
-
 #[derive(Deserialize, Serialize)]
 pub struct MailBox {
     pub name: Option<String>,
@@ -77,7 +86,10 @@ pub struct MailBox {
 
 impl MailBox {
     pub fn into_lettre_mailbox(&self) -> Result<lettre::message::Mailbox, anyhow::Error> {
-        Ok(lettre::message::Mailbox::new(self.name.clone(), self.email.parse()?))
+        Ok(lettre::message::Mailbox::new(
+            self.name.clone(),
+            self.email.parse()?,
+        ))
     }
 }
 

@@ -30,7 +30,7 @@ Content-Type: application/json
         "to": {"name": "some1", "email": "some1@example.org"},
         "reply_to": {"name": "merlleu", "email": "merlleu@example.org"},
         "subject": "Hello",
-        "text_body": "Hello, this is a test email"
+        "text_body": "Hello, this is a test email",
         "html_body": "<h1>Hello</h1><p>this is a test email</p>"
     }
 ]

@@ -5,8 +5,6 @@ pub struct AppConfig {
 impl AppConfig {
     pub fn new() -> Self {
         let webhook_secret = std::env::var("WEBHOOK_SECRET").expect("WEBHOOK_SECRET is not set.");
-        AppConfig {
-            webhook_secret,
-        }
+        AppConfig { webhook_secret }
     }
 }
