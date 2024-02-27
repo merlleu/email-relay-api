@@ -31,7 +31,7 @@ Content-Type: application/json
         "reply_to": {"name": "merlleu", "email": "merlleu@example.org"},
         "subject": "Hello",
         "text_body": "Hello, this is a test email"
-        "html_body": "<h1>Hello</h1><p>this is a test email</p>
+        "html_body": "<h1>Hello</h1><p>this is a test email</p>"
     }
 ]
 ```

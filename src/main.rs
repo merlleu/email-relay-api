@@ -11,14 +11,16 @@ pub struct Context {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let addr = std::env::var("HOST_ADDR").unwrap_or("0.0.0.0:3000".to_string());
-    println!("Started on {}.", addr);
+    
 
     let ctx = Context {
-        lettre: lettre::AsyncSmtpTransport::<Tokio1Executor>::relay(&std::env::var("SMTP_SERVER").unwrap())
+        lettre: lettre::AsyncSmtpTransport::<Tokio1Executor>::relay(&std::env::var("SMTP_SERVER").expect("SMTP_SERVER is not set"))
             .unwrap()
             .build(),
         config: config::AppConfig::new(),
     };
+
+    println!("Started on {}.", addr);
 
     let context = web::Data::new(ctx);
     HttpServer::new(move || {
