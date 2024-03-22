@@ -7,8 +7,7 @@ This is a simple api server that listens for incoming requests and sends an emai
 - WEBHOOK_SECRET: Secret to be used in the webhook
 
 ## Use with docker
-- `docker pull merlleu/email-relay-api:latest`
-- ```bash
+```bash
 docker run 
     -d
     -e SMTP_SERVER="postfix" 
