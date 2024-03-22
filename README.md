@@ -1,7 +1,11 @@
-# email-relay-api
+# Postfix-Relay-API 📨
 
 ## Description
-This is a simple api server that listens for incoming requests and sends an email using the provided data.
+This is a simple api server written in Rust that transfers emails sent via an HTTP request to a postfix instance.
+
+## Why ?
+Securing postfix is hard but having it inside a docker network alongside this relay is secure.
+This also lets you have a simple REST API to call rather than using SMTP libraries.
 
 ## Environment variables
 - WEBHOOK_SECRET: Secret to be used in the webhook
@@ -31,6 +35,14 @@ Content-Type: application/json
         "subject": "Hello",
         "text_body": "Hello, this is a test email",
         "html_body": "<h1>Hello</h1><p>this is a test email</p>"
+    },
+    {
+        "from": {"name": "merlleu", "email": "merlleu@example.org"},
+        "to": {"name": "some2", "email": "some2@example.org"},
+        "reply_to": {"name": "merlleu", "email": "merlleu@example.org"},
+        "subject": "Hello",
+        "text_body": "Hello, this is a test email #2",
+        "html_body": "<h1>Hello</h1><p>this is a test email #2</p>"
     }
 ]
 ```
@@ -38,6 +50,7 @@ Content-Type: application/json
 Response:
 ```json
 [
-    {"Ok": {}} // or {"Err": "error message"}
+    {"Ok": {}},
+    {"Err": "error message"}
 ]
 ```
